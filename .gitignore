@@ -1,0 +1,12 @@
+# Ignore the conda environment
+neuroDBS/
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# Ignore Jupyter Notebook checkpoints 
+.ipynb_checkpoints/
+
+# Ignore log files
+*.log
