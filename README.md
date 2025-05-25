@@ -9,3 +9,6 @@ For the classification of the STN-DBS ON/OFF states, the extracted feature maps 
 
    ```bash
    git clone https://github.com/kiakoudimi/NeuroDBS.git
+
+2. **Install dependences**:
+pip install -r requirements.txt
