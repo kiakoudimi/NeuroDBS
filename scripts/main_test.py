@@ -1,12 +1,12 @@
+"""Run classification on validation cohort."""
+
 # Libraries
 import random
 
 import nibabel as nib
-import nilearn.masking
+import numpy as np
 import pandas as pd
-import xlsxwriter
-from functions import *
-from nilearn.input_data import NiftiLabelsMasker
+from functions import get_data
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
 from sklearn.linear_model import LogisticRegression

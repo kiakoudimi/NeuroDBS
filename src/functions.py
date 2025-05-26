@@ -1,3 +1,5 @@
+"""Functions used in the analyses."""
+
 import os
 import re
 from fnmatch import fnmatch
@@ -12,6 +14,18 @@ import seaborn as sns
 
 
 def get_data(root, mask_img, ids=None):
+    """
+    Get feature maps in ON and OFF states.
+
+    Args:
+        root (str or Path): Path to the root directory containing the data
+        mask_img (str or Path): Path to the mask image
+        ids (list, optional): List of IDs to filter the data
+
+    Returns:
+        two arrays containing the on and off feature vectors for all subjects
+
+    """
     pattern_on = "*ON*.nii"
     pattern_off = "*OFF*.nii"
     on_state_paths = []
@@ -69,6 +83,19 @@ def get_data(root, mask_img, ids=None):
 
 
 def plot_auc_heatmap(file_path, model_list):
+    """
+    Generate a square-like heatmap plot of AUC scores for each model-feature map pair.
+
+    Args:
+        file_path (str or Path): Path to the AUC results. Each sheet should
+                                 represent one dataset and contain model names in the first column
+                                 and corresponding AUC scores in the second column
+        model_list (list of str): List of model names
+
+    Returns:
+        None: display and save the plot.
+
+    """
     xls = pd.ExcelFile(file_path)
 
     dataset_list = []
@@ -140,11 +167,24 @@ def plot_auc_heatmap(file_path, model_list):
     plt.yticks(fontsize=15)
 
     plt.tight_layout()
-    plt.savefig("hetmap.svg")
+    plt.savefig("heatmap.svg")
     plt.show()
 
 
 def plot_metrics(file_path, metrics, model_names):
+    """
+    Plot metrics across feature maps and models.
+
+    Args:
+        file_path (str or Path): Path to results (.xlsx). Each sheet should contain metric values
+                                 for each model, with model names in the first column.
+        metrics (list of str): List of metric names to plot (e.g., ["AUC", "F1"]).
+        model_names (list of str): Ordered list of model names to display on the x-axis.
+
+    Returns:
+        None: display and save the plot.
+
+    """
     # Read data
     xls = pd.ExcelFile(file_path)
     datasets = xls.sheet_names
