@@ -1,12 +1,11 @@
 """Run classification on training cohort."""
 
 # Libraries
-import random
-
-import sys
 import os
+import random
+import sys
 
-project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, project_root)
 
 import nibabel as nib
