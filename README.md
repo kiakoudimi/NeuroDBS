@@ -10,6 +10,11 @@ For the classification of the STN-DBS ON/OFF states, the extracted feature maps 
    ```bash
    git clone https://github.com/kiakoudimi/NeuroDBS.git
 
+2. **Create a conda environment**:
+   ```bash
+   conda create -n neuroDBS python=3.10
+   conda activate neuroDBS
+
 2. **Install dependences**:
    ```bash
    pip install -r requirements.txt
