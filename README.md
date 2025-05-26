@@ -10,6 +10,30 @@ For the classification of the STN-DBS ON/OFF states, the extracted feature maps 
    ```bash
    git clone https://github.com/kiakoudimi/NeuroDBS.git
 
+2. **Create a conda environment**:
+   ```bash
+   conda create -n neuroDBS python=3.10
+   conda activate neuroDBS
+
 2. **Install dependences**:
    ```bash
    pip install -r requirements.txt
+
+## Run the Script
+After setting up your environment and installing dependencies, you can run the main scripts as follows:
+
+1. **Run via SLURM**:
+
+   ```bash
+   cd ../NeuroDBS/scripts/
+   sbatch main_test_job.sh
+   
+2. **Run directly**:
+
+   ```bash
+   cd ../NeuroDBS/scripts/
+   python main_test.py
+
+The same steps apply for runing the  main_train.sh and main_train.py
+
+
