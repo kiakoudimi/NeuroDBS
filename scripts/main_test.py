@@ -1,12 +1,18 @@
 """Run classification on validation cohort."""
 
 # Libraries
+import sys
+import os
+
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, project_root)
+
 import random
 
 import nibabel as nib
 import numpy as np
 import pandas as pd
-from functions import get_data
+from src.functions import get_data
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
 from sklearn.linear_model import LogisticRegression

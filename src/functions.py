@@ -32,7 +32,7 @@ def get_data(root, mask_img, ids=None):
     off_state_paths = []
 
     # Walk through the directory to find ON and OFF files
-    for path, files in os.walk(root):
+    for path,_,files in os.walk(root):
         for name in files:
             if fnmatch(name, pattern_on):
                 on_state_paths.append(Path(path) / name)
@@ -40,20 +40,20 @@ def get_data(root, mask_img, ids=None):
                 off_state_paths.append(Path(path) / name)
 
     # Filter out paths containing '105'
-    on_state_paths = [path for path in on_state_paths if "105" not in path]
-    off_state_paths = [path for path in off_state_paths if "105" not in path]
+    on_state_paths = [path for path in on_state_paths if "105" not in str(path)]
+    off_state_paths = [path for path in off_state_paths if "105" not in str(path)]
 
     # Sort paths based on numerical values in filenames
     on_paths = sorted(
         on_state_paths,
-        key=lambda path: int(re.search(r"(\d+)", path.split("/")[-1]).group())
-        if re.search(r"(\d+)", path.split("/")[-1])
+        key=lambda path: int(re.search(r"(\d+)", str(path).split("/")[-1]).group())
+        if re.search(r"(\d+)", str(path).split("/")[-1])
         else 0,
     )
     off_paths = sorted(
         off_state_paths,
-        key=lambda path: int(re.search(r"(\d+)", path.split("/")[-1]).group())
-        if re.search(r"(\d+)", path.split("/")[-1])
+        key=lambda path: int(re.search(r"(\d+)", str(path).split("/")[-1]).group())
+        if re.search(r"(\d+)", str(path).split("/")[-1])
         else 0,
     )
 
