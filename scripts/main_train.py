@@ -30,7 +30,7 @@ measures = ["ALFF", "fALFF", "ECM_add", "ECM_deg", "ECM_norm", "ECM_rank", "GCOR
 
 # Models
 models = {
-    "Logistic Regression": LogisticRegression(random_state=124),
+    "Logistic Regression": LogisticRegression(random_state=124, max_iter=500),
     "KNN": KNeighborsClassifier(),
     "Naive Bayes": GaussianNB(),
     "Decision Tree": DecisionTreeClassifier(random_state=124),

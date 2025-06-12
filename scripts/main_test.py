@@ -15,7 +15,7 @@ import pandas as pd
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score, roc_auc_score
+from sklearn.metrics import accuracy_score, f1_score, recall_score, roc_auc_score
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
@@ -31,7 +31,7 @@ measures = ["ALFF", "fALFF", "ECM_add", "ECM_deg", "ECM_norm", "ECM_rank", "GCOR
 
 # Define models
 models = {
-    "Logistic Regression": LogisticRegression(random_state=124),
+    "Logistic Regression": LogisticRegression(random_state=124, max_iter=500),
     "KNN": KNeighborsClassifier(),
     "Naive Bayes": GaussianNB(),
     "Decision Tree": DecisionTreeClassifier(random_state=124),
@@ -76,18 +76,14 @@ for measure in measures:
 
         auc = roc_auc_score(y_ts, y_proba)
         acc = accuracy_score(y_ts, y_pred)
-        prec = precision_score(y_ts, y_pred)
         rec = recall_score(y_ts, y_pred)
         f1 = f1_score(y_ts, y_pred)
 
-        results.append({"Model": name, "ROC_AUC": auc, "Accuracy": acc, "Precision": prec, "Recall": rec, "F1": f1})
+        results.append({"Model": name, "ROC_AUC": auc, "Accuracy": acc, "Recall": rec, "F1": f1})
 
         # Get feature importances
-        if hasattr(clf, "coef_"):
-            importance = clf.coef_[0]
-            feature_importances[name] = importance
-        elif hasattr(clf, "feature_importances_"):
-            importance = clf.feature_importances_
+        if isinstance(clf, (LogisticRegression, LinearDiscriminantAnalysis)):  
+            importance = clf.coef_[0]  
             feature_importances[name] = importance
 
     # Save performance metrics
