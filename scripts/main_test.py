@@ -9,7 +9,7 @@ sys.path.insert(0, project_root)
 
 import random
 
-import nibabel as nib
+# import nibabel as nib
 import numpy as np
 import pandas as pd
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
@@ -20,7 +20,8 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
-from src.functions import get_data
+
+# from src.functions import get_data
 from xgboost import XGBClassifier
 
 # Feature maps
@@ -51,10 +52,10 @@ for measure in measures:
     print(f"Processing measure: {measure}")
 
     # Fetch features for ON and OFF states
-    on_features_train = np.array(pd.read_csv(f'data_train/{measure}_ON.csv'))
-    off_features_train = np.array(pd.read_csv(f'data_train/{measure}_OFF.csv'))
-    on_features_test = np.array(pd.read_csv(f'data_test/{measure}_ON.csv'))
-    off_features_test = np.array(pd.read_csv(f'data_test/{measure}_OFF.csv'))
+    on_features_train = np.array(pd.read_csv(f"data_train/{measure}_ON.csv"))
+    off_features_train = np.array(pd.read_csv(f"data_train/{measure}_OFF.csv"))
+    on_features_test = np.array(pd.read_csv(f"data_test/{measure}_ON.csv"))
+    off_features_test = np.array(pd.read_csv(f"data_test/{measure}_OFF.csv"))
 
     X_tr = np.concatenate((on_features_train, off_features_train), axis=0)
     y_tr = np.concatenate([np.zeros(len(on_features_train)), np.ones(len(off_features_train))])
@@ -81,8 +82,8 @@ for measure in measures:
         results.append({"Model": name, "ROC_AUC": auc, "Accuracy": acc, "Recall": rec, "F1": f1})
 
         # Get feature importances
-        if isinstance(clf, (LogisticRegression, LinearDiscriminantAnalysis)):  
-            importance = clf.coef_[0]  
+        if isinstance(clf, (LogisticRegression, LinearDiscriminantAnalysis)):
+            importance = clf.coef_[0]
             feature_importances[name] = importance
 
     # Save performance metrics
