@@ -2,7 +2,7 @@
 #SBATCH --job-name=model_ts_classification   # Job name
 #SBATCH --output=classification_test.out       # Standard output
 #SBATCH --error=classification_test.err        # Standard error
-#SBATCH -c 8                              # Request 4 CPU cores
+#SBATCH -c 8                              # Request 8 CPU cores
 #SBATCH --mem=32G                         # Request 32 GB of memory
 #SBATCH --time=8:00:00                   # Set a runtime limit of 8 hours
 
