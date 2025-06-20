@@ -23,10 +23,7 @@ from sklearn.tree import DecisionTreeClassifier
 from src.functions import get_data
 from xgboost import XGBClassifier
 
-# File paths and parameteres
-data_path_train = "../data/DBS15T/"
-data_path_test = "../data/DBS15T2/"
-mask_img = nib.load("../data/msk/sum_80_bin.nii")
+# Feature maps
 measures = ["ALFF", "fALFF", "ECM_add", "ECM_deg", "ECM_norm", "ECM_rank", "GCOR", "ICC", "IHC", "LCOR"]
 
 # Define models
@@ -54,8 +51,10 @@ for measure in measures:
     print(f"Processing measure: {measure}")
 
     # Fetch features for ON and OFF states
-    on_features_train, off_features_train = get_data(data_path_train + measure, mask_img)
-    on_features_test, off_features_test = get_data(data_path_test + measure, mask_img)
+    on_features_train = np.array(pd.read_csv(f'data_train/{measure}_ON.csv'))
+    off_features_train = np.array(pd.read_csv(f'data_train/{measure}_OFF.csv'))
+    on_features_test = np.array(pd.read_csv(f'data_test/{measure}_ON.csv'))
+    off_features_test = np.array(pd.read_csv(f'data_test/{measure}_OFF.csv'))
 
     X_tr = np.concatenate((on_features_train, off_features_train), axis=0)
     y_tr = np.concatenate([np.zeros(len(on_features_train)), np.ones(len(off_features_train))])

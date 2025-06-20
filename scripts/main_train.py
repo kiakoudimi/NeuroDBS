@@ -23,9 +23,7 @@ from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from xgboost import XGBClassifier
 
-# Paths and parameters
-data_path_train = "../data/DBS15T/"
-mask_img = nib.load("../data/msk/sum_80_bin.nii")
+# Feature maps
 measures = ["ALFF", "fALFF", "ECM_add", "ECM_deg", "ECM_norm", "ECM_rank", "GCOR", "ICC", "IHC", "LCOR"]
 
 # Models
@@ -59,7 +57,9 @@ for measure in measures:
     print(f"Processing measure: {measure}")
 
     # Load data
-    on_features, off_features = get_data(data_path_train + measure, mask_img)
+    on_features = np.array(pd.read_csv(f'data_train/{measure}_ON.csv'))
+    off_features = np.array(pd.read_csv(f'data_train/{measure}_OFF.csv'))
+    
     X = np.concatenate((on_features, off_features), axis=0)
     y = np.concatenate([np.zeros(len(on_features)), np.ones(len(off_features))])
     groups = np.concatenate((range(len(on_features)), range(len(off_features))))
