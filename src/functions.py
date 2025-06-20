@@ -1,10 +1,5 @@
 """Functions used in the analyses."""
 
-import os
-import re
-from fnmatch import fnmatch
-from pathlib import Path
-
 import matplotlib.pyplot as plt
 import nibabel as nib
 import nilearn.masking
