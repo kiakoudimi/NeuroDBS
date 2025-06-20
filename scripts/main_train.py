@@ -8,10 +8,11 @@ import sys
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, project_root)
 
-import nibabel as nib
+# import nibabel as nib
 import numpy as np
 import pandas as pd
-from functions import get_data
+
+# from functions import get_data
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
@@ -57,9 +58,9 @@ for measure in measures:
     print(f"Processing measure: {measure}")
 
     # Load data
-    on_features = np.array(pd.read_csv(f'data_train/{measure}_ON.csv'))
-    off_features = np.array(pd.read_csv(f'data_train/{measure}_OFF.csv'))
-    
+    on_features = np.array(pd.read_csv(f"data_train/{measure}_ON.csv"))
+    off_features = np.array(pd.read_csv(f"data_train/{measure}_OFF.csv"))
+
     X = np.concatenate((on_features, off_features), axis=0)
     y = np.concatenate([np.zeros(len(on_features)), np.ones(len(off_features))])
     groups = np.concatenate((range(len(on_features)), range(len(off_features))))
