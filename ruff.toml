@@ -82,6 +82,7 @@ lint.ignore = [
     "ISC001",  # implicit string concatenation (conflicts with ruff format)
     "NPY002",  # use numpy random Generator
     "PIE790",  # unnecessary pass statement
+    "PTH",  # os.path related
     "RUF052",  # dummy var accessed
     "S301",  # suspicious-pickle-usage
     "TD002",  # Missing author in To-Do
