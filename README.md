@@ -51,3 +51,6 @@ After setting up your environment and installing dependencies, you can run the m
    ```
 
 The same steps apply for running the `main_train.sh` and `main_train.py`
+
+## Data availability
+The dataset is available at IEEE DataPort doi:10.21227/tavd-s033.
