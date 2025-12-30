@@ -7,6 +7,8 @@ import matplotlib.pyplot as plt
 # import numpy as np
 import pandas as pd
 import seaborn as sns
+from aeon.visualisation import plot_critical_difference, plot_significance
+from scipy.stats import friedmanchisquare
 
 
 def plot_auc_heatmap(file_path, model_list):
@@ -82,6 +84,7 @@ def plot_auc_heatmap(file_path, model_list):
 
     plt.tight_layout()
     plt.close(fig)
+    
     return fig
 
 
@@ -129,4 +132,98 @@ def plot_metrics(file_path, metrics, model_names):
 
     plt.tight_layout()
     plt.close(fig)
+    
     return fig
+<<<<<<< HEAD
+=======
+
+def plot_critical_differences(file_path, output_path, model_names, save, figures_dir):
+    
+    all_sheets = pd.read_excel(file_path, sheet_name=None, index_col=0)
+
+    auc_df = pd.DataFrame({sheet: df["ROC_AUC"].values for sheet, df in all_sheets.items()}).T  
+
+    auc_df.columns = model_names
+
+    friedman_stat, p_value = friedmanchisquare(*auc_df.T.values)
+    open(output_path, "w").write(f"Friedman test statistic: {friedman_stat:.4f}\nP-value: {p_value:.6e}\n")
+
+    print(f"Friedman test statistic: {friedman_stat:.4f}, p-value = {p_value:.4e}")
+
+    fig = plt.figure(figsize=(16, 12))
+    plot_critical_difference(
+        auc_df.values,
+        auc_df.columns,
+        lower_better=False,
+        correction='holm',
+        alpha=0.05
+    )
+    plt.savefig(figures_dir + 'critical_difference_diagram_'+save)
+    plt.close(fig)
+    
+    fig2 = plt.figure(figsize=(16, 12))
+    plot_significance(np.array(auc_df), model_names)
+    plt.savefig(figures_dir + 'significance_'+save)
+    plt.close(fig2)    
+    
+    return fig, fig2
+
+def plot_boxplots(file_path, model_names):
+    
+    all_sheets = pd.read_excel(file_path, sheet_name=None, index_col=0)
+
+    df_long = (
+        pd.DataFrame({sheet: df["ROC_AUC"].values for sheet, df in all_sheets.items()})
+        .T.set_axis(model_names, axis=1)
+        .melt(var_name="Classifier", value_name="AUC")
+    )
+ 
+    fig = plt.figure(figsize=(8, 3.5))
+
+    sns.violinplot(
+        data=df_long, 
+        x="Classifier", 
+        y="AUC", 
+        inner=None,  
+        linewidth=1.5,
+        color='lightgray')
+
+    sns.boxplot(
+        data=df_long, 
+        x="Classifier", 
+        y="AUC", 
+        width=0.12,  
+        showcaps=False,  
+        showfliers=False,
+        boxprops={'facecolor':'black', 'edgecolor':'None', 'linewidth':0},  
+        whiskerprops={'color':'black', 'linewidth':1},  
+        medianprops={'color':'white', 'linewidth':3}  
+    )
+
+    plt.xticks(rotation=45, size=12)
+    plt.yticks( size=12)
+    plt.title("AUC Distribution Across Classifiers")
+    plt.grid(axis='y', linestyle='--', alpha=0.7)
+    plt.ylim(0.16, 1.13)
+    plt.close(fig)
+    
+    return fig
+
+def get_feature_maps(feature_importances_path, measures, mask, output):
+
+    for measure in measures:
+        print(f"Processing feature importance for measure: {measure}")
+        df_feat = pd.read_excel(feature_importances_path, sheet_name=measure)
+
+        for model_name in df_feat.columns:
+            importance_scores = df_feat[model_name].values
+
+            tmp_img = nilearn.masking.unmask(importance_scores, mask_img)
+
+            nii_data = tmp_img.get_fdata()
+            nii_affine = tmp_img.affine
+            importance_nii = nib.Nifti1Image(nii_data, affine=nii_affine)
+            nib.save(importance_nii, output + f'{measure}_{model_name}_importance_map.nii.gz')
+            
+    return
+>>>>>>> 50a338e (revision)
