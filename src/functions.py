@@ -134,8 +134,6 @@ def plot_metrics(file_path, metrics, model_names):
     plt.close(fig)
     
     return fig
-<<<<<<< HEAD
-=======
 
 def plot_critical_differences(file_path, output_path, model_names, save, figures_dir):
     
@@ -226,4 +224,3 @@ def get_feature_maps(feature_importances_path, measures, mask, output):
             nib.save(importance_nii, output + f'{measure}_{model_name}_importance_map.nii.gz')
             
     return
->>>>>>> 50a338e (revision)
