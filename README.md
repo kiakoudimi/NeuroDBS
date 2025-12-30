@@ -36,21 +36,13 @@ The default parameters were used for all cases.
 
 After setting up your environment and installing dependencies, you can run the main scripts as follows:
 
-1. **Run via SLURM**:
+**Run directly**:
 
-   ```bash
-   cd ../NeuroDBS/scripts/
-   sbatch main_test_job.sh
-   ```
-
-2. **Run directly**:
-
-   ```bash
-   cd ../NeuroDBS/scripts/
-   python main_test.py
-   ```
-
-The same steps apply for running the `main_train.sh` and `main_train.py`
+```bash
+cd ../NeuroDBS/scripts/
+jupyter notebook
+main.ipynb
+```
 
 ## Data availability
 The dataset is available at IEEE DataPort doi:10.21227/tavd-s033.
